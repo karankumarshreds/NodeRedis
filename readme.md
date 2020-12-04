@@ -41,7 +41,8 @@ VALUE: { key: 'club', value: 'Manchester United' }
 
 ```javascript
 client.hset("football", "club", "manchester united");
-client.hget("football", "club", (err, val) => console.log(val)); // returns true and prints "manchester united"
+client.hget("football", "club", (err, val) => console.log(val)); // returns true
+// and prints "manchester united"
 ```
 
 ### NOTE :
@@ -50,6 +51,8 @@ SET function only takes in either `string` or `number` as a value inputs. In cas
 
 ```javascript
 client.set('football', JSON.stringify({ club: "manchester united" })
-client.get('football', ( err, val) => console.log(val));  // returns true
-                                                          // and prints {"club":"manchester united"}
+client.get('football', (err, val) => console.log(val));  // returns true
+                                                         // and prints {"club":"manchester united"}
+client.get('football', (err, val) => console.log(JSON.parse(val))); // returns true
+                                                         // and prints { club: 'manchester united' }
 ```
