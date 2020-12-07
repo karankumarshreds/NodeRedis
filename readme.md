@@ -56,3 +56,9 @@ client.get('football', (err, val) => console.log(val));  // returns true
 client.get('football', (err, val) => console.log(JSON.parse(val))); // returns true
                                                          // and prints { club: 'manchester united' }
 ```
+
+### Clean Redis Cache
+
+```javascript
+client.flushall();
+```
