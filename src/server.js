@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 const router = require("./routes/blog");
+const { redisCacheConfig } = require("./caching/cache");
 
 const app = express();
 app.use(cors());
@@ -10,15 +11,7 @@ app.use(express.json());
 app.use(router);
 
 /** Redis global config */
-
-// backup of default exec method
-const exec = mongoose.Query.prototype.exec;
-// overriding the default behaviour of exec
-mongoose.Query.prototype.exec = function () {
-  console.log("ADD CUSTOM LOGIC");
-  // THEN run the default exec method
-  return exec.apply(this, arguments);
-};
+redisCacheConfig();
 
 const connectMongo = async () => {
   try {
