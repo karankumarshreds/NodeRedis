@@ -1,3 +1,4 @@
+const { json } = require("express");
 const mongoose = require("mongoose");
 const redis = require("redis");
 const util = require("util");
@@ -30,10 +31,12 @@ function redisCacheConfig() {
     const cacheValue = await client.get(redisKey);
     if (cacheValue) {
       console.log("CACHE VALUE", cacheValue);
+      return JSON.parse(cacheValue); // as result
     }
-    // if cache value does not exist, run the original query
+    // if cache value does not exist run the original query
     const result = await exec.apply(this, arguments);
-    console.log("RESULT", result);
+    client.set(redisKey, JSON.stringify(result));
+    return result;
   };
 }
 
